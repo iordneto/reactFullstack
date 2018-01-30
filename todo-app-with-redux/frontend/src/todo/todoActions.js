@@ -7,10 +7,26 @@ export const changeDescription = event => ({
     payload: event.target.value
 })
 
-export const search = event => {
+export const search = () => {
     const request =  Axios.get(`${URL}?sort=-createdAt${search}`)
     return {
         type: "TODO_SEARCHED",
         payload: request
+    }
+}
+
+/*export const add = (description) => {
+    const request = Axios.post(URL, { description })
+    return [
+        { type: "TODO_ADDED", payload: request },
+        search()
+    ]
+}*/
+
+export const add = (description) => {
+    return dispatch => {
+        Axios.post(URL, { description })
+        .then(resp => dispatch({ type: "TODO_ADDED", payload: resp.data }))
+        .then(resp => dispatch(search()))
     }
 }
