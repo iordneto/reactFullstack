@@ -5,12 +5,14 @@ import Header from '../common/template/header'
 import SideBar from '../common/template/sidebar'
 import Footer from '../common/template/footer'
 
+import Routes from './routes'
+
 export default props => (
     <div className='wrapper'>
         <Header />
         <SideBar />
         <div className='content-wrapper'>
-            <h1>Algum texto bla bla bla</h1>
+            <Routes />
         </div>
         <Footer />
     </div>
