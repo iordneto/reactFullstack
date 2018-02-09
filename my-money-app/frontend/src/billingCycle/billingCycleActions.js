@@ -6,7 +6,7 @@ import { showTabs, selectTab } from '../common/tab/tabActions'
 import billingCycle from './billingCycle';
 
 const BASE_URL = 'http://localhost:3003/api'
-const INITIAL_VALUES = {}
+const INITIAL_VALUES = {credits:[{}]}
 
 export const getList = () => {
     const request = axios.get(`${BASE_URL}/billingCycles`)
@@ -22,7 +22,7 @@ export const submit = (values, method) => {
         const id = values._id ? values._id : '' 
         axios[method](`${BASE_URL}/billingCycles/${id}`, values)
             .then(resp => {
-                toastr.success('Sucesso', 'Seu ciclo de pagamento foi incluído com sucesso!')
+                toastr.success('Sucesso', 'Sua ação foi realizada com sucesso!')
                 dispatch(init())
             })
             .catch(e => e.response.data.errors.forEach(erro => {
