@@ -17,9 +17,10 @@ export const getList = () => {
     })
 }
 
-export const create = (values) => {
+export const submit = (values, method) => {
     return dispatch => {
-        axios.post(`${BASE_URL}/billingCycles`, values)
+        const id = values._id ? values._id : '' 
+        axios[method](`${BASE_URL}/billingCycles/${id}`, values)
             .then(resp => {
                 toastr.success('Sucesso', 'Seu ciclo de pagamento foi incluído com sucesso!')
                 dispatch(init())
@@ -30,10 +31,30 @@ export const create = (values) => {
     }
 }
 
+export const create = (values) => {
+    return submit(values, 'post')
+}
+
+export const update = (values) => {
+    return submit(values, 'put')
+}
+
+export const remove = (values) => {
+    return submit(values, 'delete')
+}
+
 export const showUpdate = (billingCycle) => {
     return [
         showTabs('tabUpdate'),
         selectTab('tabUpdate'),
+        initialize('billingCycleForm', billingCycle)
+    ]
+}
+
+export const showDelete = (billingCycle) => {
+    return [
+        showTabs('tabDelete'),
+        selectTab('tabDelete'),
         initialize('billingCycleForm', billingCycle)
     ]
 }
