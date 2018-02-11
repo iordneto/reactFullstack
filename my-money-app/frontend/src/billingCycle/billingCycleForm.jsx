@@ -9,7 +9,7 @@ import LabelAndInput from '../common/form/labelAndInput'
 
 class BillingCycleForm extends Component {
     render() {
-        const { handleSubmit, readOnly, credits } = this.props
+        const { handleSubmit, readOnly, credits, debits } = this.props
         return (
             <form role='form' onSubmit={handleSubmit}>
                 <div className="box-body">
@@ -37,12 +37,19 @@ class BillingCycleForm extends Component {
                         placeholder='Informe o ano'
                         type='number'
                         readOnly={readOnly} />
-                    <ItemList 
-                    list={credits}
-                    cols='12 6' 
-                    readOnly={readOnly}
-                    legend='Créditos' 
-                    field= 'credits' />
+                    <ItemList
+                        list={credits}
+                        cols='12 6'
+                        readOnly={readOnly}
+                        legend='Créditos'
+                        field='credits' />
+                    <ItemList
+                        list={debits}
+                        cols='12 6'
+                        readOnly={readOnly}
+                        legend='Débitos'
+                        field='debits' 
+                        showStatus={true} />
                 </div>
                 <div className="box-footer">
                     <button className={`btn btn-${this.props.submitClass}`} type="submit">{this.props.submitLabel}</button>
@@ -55,6 +62,6 @@ class BillingCycleForm extends Component {
 
 BillingCycleForm = reduxForm({ form: 'billingCycleForm', destroyOnUnmount: false })(BillingCycleForm)
 const selector = formValueSelector('billingCycleForm')
-const mapStateToProps = state => ({credits: selector(state, 'credits')})
+const mapStateToProps = state => ({ credits: selector(state, 'credits'), debits: selector(state, 'debits') })
 const mapDispatchToProps = dispatch => bindActionCreators({ init }, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(BillingCycleForm) 
