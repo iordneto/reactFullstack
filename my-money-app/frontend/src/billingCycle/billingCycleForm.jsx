@@ -6,10 +6,20 @@ import { bindActionCreators } from 'redux'
 import { init } from './billingCycleActions'
 import ItemList from './itemList'
 import LabelAndInput from '../common/form/labelAndInput'
+import Summary from './summary'
 
 class BillingCycleForm extends Component {
+    calculateSummary(){
+        const sum = (t, v) => t + v
+        return ({
+            sumOfCredits: this.props.credits.map(credit => +credit.value || 0).reduce(sum),
+            sumOfDebits: this.props.debits.map(debit => +debit.value || 0).reduce(sum)            
+        })
+    }
+    
     render() {
         const { handleSubmit, readOnly, credits, debits } = this.props
+        const { sumOfCredits, sumOfDebits }= this.calculateSummary()
         return (
             <form role='form' onSubmit={handleSubmit}>
                 <div className="box-body">
@@ -37,6 +47,9 @@ class BillingCycleForm extends Component {
                         placeholder='Informe o ano'
                         type='number'
                         readOnly={readOnly} />
+                    <Summary
+                        credit={sumOfCredits} 
+                        debit={sumOfDebits} />                        
                     <ItemList
                         list={credits}
                         cols='12 6'
