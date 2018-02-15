@@ -23,6 +23,9 @@
     "dev": "nodemon",
     "production": "pm2 start src/loader.js --name my-money-backend"
   },
+  "engines": {
+    "node": ">=6.11.1"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC"
